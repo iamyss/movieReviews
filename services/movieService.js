@@ -7,14 +7,18 @@ const createMovie = (name, date, rating, poster) => {
     rating: rating,
     poster: poster,
   });
-  newMovie
-    .save()
-    .then((movie) => {
-      console.log("movie saved", movie);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  return new Promise((resolve, rejects) => {
+    newMovie
+      .save()
+      .then((movie) => {
+        console.log("movie saved", movie);
+        resolve(movie);
+      })
+      .catch((err) => {
+        console.log(err);
+        rejects(err);
+      });
+  });
 };
 
 module.exports = {

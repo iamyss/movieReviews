@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const movie = new Schema({
-  _id: ObjectId,
   title: {
     type: String,
     required: [true, "Movie Title is Mandatory"],

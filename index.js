@@ -47,6 +47,24 @@ app.post("/", function (req, res) {
   }
 });
 
+app.post("/movies", function (req, res) {
+  let body = req.body;
+  let prom = movieService.createMovie(
+    body.title,
+    body.date,
+    body.rating,
+    body.poster
+  );
+  console.log(prom);
+  prom
+    .then((movie) => {
+      res.status(200).json(movie);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
 app.listen(3000, "localhost", (err) => {
   if (err) {
     console.log(err);
