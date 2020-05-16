@@ -26,7 +26,35 @@ const getAllMovies = async () => {
   }
 };
 
+const updateMovie = async (id, body) => {
+  try {
+    let { title, date, rating, poster } = body;
+    let movie = await Movies.findById(id);
+    movie.title = title;
+    movie.date = date;
+    movie.rating = rating;
+    movie.poster = poster;
+    movie = await movie.save();
+    return movie;
+  } catch (ex) {
+    console.log(ex);
+    throw ex;
+  }
+};
+
+const deleteMovie = async (id) => {
+  try {
+    let movie = await Movies.findByIdAndDelete(id);
+    return movie;
+  } catch (ex) {
+    console.log(ex);
+    throw ex;
+  }
+};
+
 module.exports = {
   createMovie,
   getAllMovies,
+  updateMovie,
+  deleteMovie,
 };

@@ -73,6 +73,24 @@ app.get("/movies", async (req, res) => {
   }
 });
 
+app.post("/movies/:id", async (req, res) => {
+  try {
+    let movie = await movieService.updateMovie(req.params.id, req.body);
+    res.status(200).json(movie);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
+app.post("/movies/delete/:id", async (req, res) => {
+  try {
+    let movie = await movieService.deleteMovie(req.params.id);
+    res.status(200).json(movie);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
 app.listen(3000, "localhost", (err) => {
   if (err) {
     console.log(err);
