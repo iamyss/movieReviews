@@ -1,6 +1,8 @@
 const express = require("express");
 var bodyParser = require("body-parser");
 const app = express();
+const db = require("./db");
+const movieService = require("./services/movieService");
 
 app.use(
   bodyParser.urlencoded({
