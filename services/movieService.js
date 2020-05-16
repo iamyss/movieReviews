@@ -1,26 +1,32 @@
 const Movies = require("../models/movies");
 
-const createMovie = (name, date, rating, poster) => {
-  let newMovie = new Movies({
-    title: name,
-    date: date,
-    rating: rating,
-    poster: poster,
-  });
-  return new Promise((resolve, rejects) => {
-    newMovie
-      .save()
-      .then((movie) => {
-        console.log("movie saved", movie);
-        resolve(movie);
-      })
-      .catch((err) => {
-        console.log(err);
-        rejects(err);
-      });
-  });
+const createMovie = async (name, date, rating, poster) => {
+  try {
+    let newMovie = new Movies({
+      title: name,
+      date: date,
+      rating: rating,
+      poster: poster,
+    });
+    newMovie = await newMovie.save();
+    return newMovie;
+  } catch (ex) {
+    console.log(ex);
+    throw ex;
+  }
+};
+
+const getAllMovies = async () => {
+  try {
+    let movies = await Movies.find();
+    return movies;
+  } catch (ex) {
+    console.log(ex);
+    throw ex;
+  }
 };
 
 module.exports = {
   createMovie,
+  getAllMovies,
 };

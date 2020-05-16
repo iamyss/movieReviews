@@ -47,22 +47,30 @@ app.post("/", function (req, res) {
   }
 });
 
-app.post("/movies", function (req, res) {
-  let body = req.body;
-  let prom = movieService.createMovie(
-    body.title,
-    body.date,
-    body.rating,
-    body.poster
-  );
-  console.log(prom);
-  prom
-    .then((movie) => {
-      res.status(200).json(movie);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
+app.post("/movies", async (req, res) => {
+  try {
+    let body = req.body;
+    let newMovie = await movieService.createMovie(
+      body.title,
+      body.date,
+      body.rating,
+      body.poster
+    );
+    res.status(200).json(newMovie);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
+app.get("/movies", async (req, res) => {
+  try {
+    let movies = await movieService.getAllMovies();
+    res.status(200).json({
+      movies: movies,
     });
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
 });
 
 app.listen(3000, "localhost", (err) => {
