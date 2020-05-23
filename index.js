@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 const app = express();
 const db = require("./db");
 const movieService = require("./services/movieService");
+const peopleService = require("./services/peopleService");
 
 app.use(
   bodyParser.urlencoded({
@@ -86,6 +87,42 @@ app.post("/movies/delete/:id", async (req, res) => {
   try {
     let movie = await movieService.deleteMovie(req.params.id);
     res.status(200).json(movie);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
+app.get("/people", async (req, res) => {
+  try {
+    let people = await peopleService.getAllPeople();
+    res.status(200).json(people);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
+app.post("/people", async (req, res) => {
+  try {
+    let people = await peopleService.createPeople(req.body);
+    res.status(200).json(people);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
+app.post("/people/:id/update", async (req, res) => {
+  try {
+    let people = await peopleService.updatePeople(req.params.id, req.body);
+    res.status(200).json(people);
+  } catch (ex) {
+    res.status(400).json(ex);
+  }
+});
+
+app.post("/people/:id/delete", async (req, res) => {
+  try {
+    let people = await peopleService.deletePeople(req.params.id);
+    res.status(200).json(people);
   } catch (ex) {
     res.status(400).json(ex);
   }
